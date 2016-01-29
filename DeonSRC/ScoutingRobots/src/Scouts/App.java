@@ -45,7 +45,8 @@ public class App extends JPanel implements ActionListener {
 	
 	//Bottom Panel
 	JButton SubmitButton = new JButton("Submit Values");
-	JButton TETE= new JButton("sds");
+	JButton TETE= new JButton("ExportFile");
+	JButton Imm = new JButton("GO FOR IT");
 	
 	//UserInputed values and fields
 	boolean PortcullisChosen;
@@ -94,6 +95,7 @@ public class App extends JPanel implements ActionListener {
 	};
 	
 	JScrollPane ScrollPane = new JScrollPane(Table);
+	File importedFile;
 	public App() {
 		counter=0;
 		//Initialize starting values, no defense is picked yet and no values are inputed in the fields
@@ -146,11 +148,15 @@ public class App extends JPanel implements ActionListener {
 		BottomPanel.add(PortcullisL,BorderLayout.EAST);
 		BottomPanel.add(SubmitButton,BorderLayout.EAST);
 		BottomPanel.add(TETE);
+		BottomPanel.add(Imm);
+		Imm.addActionListener(this);
 		TETE.addActionListener(this);
 		SubmitButton.addActionListener(this);
 		//Table
+		importedFile= new File("C:\\Users\\1982\\Desktop\\ScoutingTable.txt");
+		importData(importedFile);
+		
 		ScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		ScrollPane.setPreferredSize(new Dimension(470,227));
 		ListPanel.add(ScrollPane);
 		Table.setFillsViewportHeight(true);
 		
@@ -167,6 +173,10 @@ public class App extends JPanel implements ActionListener {
 		Frame.add(BottomPanel);
 	}
 	public void actionPerformed(ActionEvent e){
+		if(e.getSource()==Imm)
+		{
+			importData(importedFile);
+		}
 		if(e.getSource()==TETE)
 		{
 			
@@ -185,12 +195,12 @@ public class App extends JPanel implements ActionListener {
 						bw.write((String)Table.getModel().getValueAt(x,y)+ " ");
 						TETE.setText((String)Table.getModel().getValueAt(x,y));
 					}
-					bw.write("\n\n");
+					bw.write("\n");
 				}
 				bw.close();
 				fw.close();
 				
-				JOptionPane.showMessageDialog(null, "DONEOE");;
+				JOptionPane.showMessageDialog(null, "File Exported");;
 
 				}
 			catch(Exception ex)
@@ -389,8 +399,6 @@ public class App extends JPanel implements ActionListener {
 			model.addRow(new Object[]{team,a,b,c,d,e,f,g,h});
 			clearFields();
 			
-			PortcullisL.setText(" P: "+P+" C: "+C+" R: "+R+" M: "+M+" D: "+D+" S: "+S+" RW: "+RW+" RT: "+RT+"  FFFF "+counter);
-			
 			counter++;
 			
 			JOptionPane.showMessageDialog(null, SuccessMsg);
@@ -399,7 +407,21 @@ public class App extends JPanel implements ActionListener {
 	public void resizeFields(){
 		int x =Frame.getWidth();
 		int y = Frame.getHeight();
-		ScrollPane.setPreferredSize(new Dimension(x/2,y/2-23));
+		ScrollPane.setPreferredSize(new Dimension(x/2-8,y/2-23));
+	}
+	private void importData(File file){
+		try{
+		BufferedReader txtReader= new BufferedReader(new FileReader(file.getAbsoluteFile()));
+		String eachLine;
+		while((eachLine=txtReader.readLine()) != null)
+		{
+			model.addRow(eachLine.split("\\s+"));
+		}
+		txtReader.close();
+		}catch(IOException ex){
+			JOptionPane.showMessageDialog(null, "DIDN'T WORK");
+			
+		}
 	}
 }
 
