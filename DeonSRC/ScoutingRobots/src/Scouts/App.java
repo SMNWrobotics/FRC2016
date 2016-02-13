@@ -16,6 +16,7 @@ public class App extends JPanel implements ActionListener {
 	JPanel Entries = new JPanel(new GridLayout(3,4));
 	JPanel ListPanel = new JPanel();
 	JPanel BottomPanel = new JPanel();
+	JPanel BottomPanel2 = new JPanel();
 	GridLayout EntryGrid = new GridLayout(0,2,20,30);
 	int counter;
 	JFrame Frame = new JFrame("Cougar Robotics Scouting 2016");
@@ -45,8 +46,8 @@ public class App extends JPanel implements ActionListener {
 	
 	//Bottom Panel
 	JButton SubmitButton = new JButton("Submit Values");
-	JButton TETE= new JButton("ExportFile");
-	JButton Imm = new JButton("GO FOR IT");
+	JButton ExportButton= new JButton("ExportFile");
+	JButton ResizeButton = new JButton("Resize Window");
 	
 	//UserInputed values and fields
 	boolean PortcullisChosen;
@@ -59,6 +60,7 @@ public class App extends JPanel implements ActionListener {
 	boolean RoughChosen;
 	
 	boolean AnyErrors;
+	boolean AlreadySaved;
 	
 	int PortcullisChosenValue;
 	int ChevalChosenValue;
@@ -85,16 +87,19 @@ public class App extends JPanel implements ActionListener {
 	
 	String[] Columns= {"TeamNumber","Port","Cheval","Ramp","Moat","Draw","Sally","Rock","Rough"};
 	Object[][] data;
-	JTable Table = new JTable(new DefaultTableModel(new Object[]{"TeamNumber","Port","Cheval","Ramp","Moat","Draw","Sally","Rock","Rough"},0));
-	DefaultTableModel model = (DefaultTableModel)Table.getModel();
-	DefaultTableModel myModel= new DefaultTableModel(){
+	JTable Table = new JTable(new DefaultTableModel(new Object[]{"TeamNumber","Port","Cheval","Ramp","Moat","Draw","Sally","Rock","Rough"},0){
 		@Override
 		public boolean isCellEditable(int row, int column){
 			return false;
 		}
-	};
+	});
+	JTable Table2 = new JTable(new DefaultTableModel(new Object[]{"TeamNumber","Port","Cheval","Ramp","Moat","Draw","Sally","Rock","Rough"},0));
+	DefaultTableModel model = (DefaultTableModel)Table.getModel();
+	DefaultTableModel SavedModel=new DefaultTableModel(new Object[]{"TeamNumber","Port","Cheval","Ramp","Moat","Draw","Sally","Rock","Rough"},0); 
+	
 	
 	JScrollPane ScrollPane = new JScrollPane(Table);
+	JScrollPane ScrollPane2 = new JScrollPane(Table2);
 	File importedFile;
 	public App() {
 		counter=0;
@@ -109,6 +114,7 @@ public class App extends JPanel implements ActionListener {
 		RoughChosen= false;
 		
 		AnyErrors = false;
+		AlreadySaved = true;
 		
 		PortcullisChosenValue = 0;
 		ChevalChosenValue = 0;
@@ -122,8 +128,24 @@ public class App extends JPanel implements ActionListener {
 		//Create the Frame
 		Frame.setLayout(new GridLayout(0,2));
 		Frame.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		Frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		Frame.setSize(948, 500);
 		Frame.setVisible(true);
+		Frame.addWindowListener(new WindowAdapter(){
+			@Override
+			public void windowClosing(WindowEvent e){
+				int x = JOptionPane.showConfirmDialog(null, "Are you sure?","close", JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE); 
+				if(x==JOptionPane.YES_OPTION){
+					if(!AlreadySaved)
+						exportData();
+					e.getWindow().dispose();
+				}else{
+					
+				}
+					
+					
+			}
+		});
 		//Create Comboxes
 		CatABox.addActionListener(this);
 		CatBBox.addActionListener(this);
@@ -147,18 +169,26 @@ public class App extends JPanel implements ActionListener {
 		BottomPanel.setBackground(Color.GREEN);
 		BottomPanel.add(PortcullisL,BorderLayout.EAST);
 		BottomPanel.add(SubmitButton,BorderLayout.EAST);
-		BottomPanel.add(TETE);
-		BottomPanel.add(Imm);
-		Imm.addActionListener(this);
-		TETE.addActionListener(this);
+		BottomPanel.add(ExportButton);
+		BottomPanel.add(ResizeButton);
+		ResizeButton.addActionListener(this);
+		ExportButton.addActionListener(this);
 		SubmitButton.addActionListener(this);
 		//Table
 		importedFile= new File("C:\\Users\\1982\\Desktop\\ScoutingTable.txt");
 		importData(importedFile);
+		Table.setAutoCreateRowSorter(false);
+		Table2.setModel(SavedModel);
 		
+		Table.setAutoCreateRowSorter(true);
 		ScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		ListPanel.add(ScrollPane);
 		Table.setFillsViewportHeight(true);
+		//Table2
+		BottomPanel2.setBackground(Color.YELLOW);
+		BottomPanel2.add(ScrollPane2);
+		
+		SubmitButton.setText(Integer.toString(Table.getRowCount()));
 		
 	}
 	public void initialize(){
@@ -171,42 +201,16 @@ public class App extends JPanel implements ActionListener {
 		Frame.add(Entries);
 		Frame.add(ListPanel);
 		Frame.add(BottomPanel);
+		Frame.add(BottomPanel2);
 	}
 	public void actionPerformed(ActionEvent e){
-		if(e.getSource()==Imm)
+		if(e.getSource()==ResizeButton)
 		{
-			importData(importedFile);
+			resizeFields();
 		}
-		if(e.getSource()==TETE)
+		if(e.getSource()==ExportButton)
 		{
-			
-			try{
-				TETE.setText("Started");
-				File file = new File("C:\\Users\\1982\\Desktop\\ScoutingTable"+".txt");
-				if(!file.exists()){
-					file.createNewFile();}
-				
-				FileWriter fw = new FileWriter(file.getAbsoluteFile());
-				BufferedWriter bw =new BufferedWriter(fw);
-				for(int x=0;x < Table.getRowCount();x++)
-				{
-					for(int y=0;y<Table.getColumnCount();y++)
-					{
-						bw.write((String)Table.getModel().getValueAt(x,y)+ " ");
-						TETE.setText((String)Table.getModel().getValueAt(x,y));
-					}
-					bw.write("\n");
-				}
-				bw.close();
-				fw.close();
-				
-				JOptionPane.showMessageDialog(null, "File Exported");;
-
-				}
-			catch(Exception ex)
-				{TETE.setText("WOOOOPS");
-				
-				}
+			exportData();
 		}
 		if(e.getSource()==SubmitButton)
 		{
@@ -279,7 +283,7 @@ public class App extends JPanel implements ActionListener {
 		try {
 			CompetitorNumber = Integer.valueOf(TeamNumberText.getText()); //Tries converting the Text in TeamNumber to an integer
 		} catch (NumberFormatException e) { //if it fails then someone put something wrong in the text field
-			JOptionPane.showMessageDialog(null, ErrorTeam);;
+			JOptionPane.showMessageDialog(null, ErrorTeam);
 			AnyErrors = true;
 		}
 		if(CompetitorNumber <7000 && CompetitorNumber >0){
@@ -290,7 +294,7 @@ public class App extends JPanel implements ActionListener {
 		}
 		else
 		{
-			JOptionPane.showMessageDialog(null, ErrorTeam);;
+			JOptionPane.showMessageDialog(null, ErrorTeam);
 			AnyErrors = true;
 		}
 			
@@ -360,6 +364,14 @@ public class App extends JPanel implements ActionListener {
 	private void addAllPoints(){
 		if(!AnyErrors) //if there aren't any errors then proceed, else don't add any values
 		{
+			Table.setAutoCreateRowSorter(false);
+			for(int l =0;l< SavedModel.getRowCount(); l++)
+			{
+				for(int p = 0; p<SavedModel.getColumnCount(); p++)
+				{
+					model.setValueAt(SavedModel.getValueAt(l, p), l, p);
+				}
+			}
 			Robot[CompetitorNumber].addToPort(PortcullisChosenValue);
 			Robot[CompetitorNumber].addToCheval(ChevalChosenValue);
 			Robot[CompetitorNumber].addToRamparts(RampartChosenValue);
@@ -386,7 +398,7 @@ public class App extends JPanel implements ActionListener {
 			String g = Integer.toString(RW);
 			String h = Integer.toString(RT);
 			int ji= Table.getRowCount()-1;
-			if(counter>0){
+			if(Table.getRowCount()>0){
 				for(int x = 0; x<=ji;x++){
 					if(Table.getValueAt(x, 0).toString().equals(team)){
 						model.removeRow(x);
@@ -400,14 +412,17 @@ public class App extends JPanel implements ActionListener {
 			clearFields();
 			
 			counter++;
-			
+			AlreadySaved = false;
 			JOptionPane.showMessageDialog(null, SuccessMsg);
+			//SavedModel = (DefaultTableModel)Table.getModel();
 		}
+		
 	}
 	public void resizeFields(){
 		int x =Frame.getWidth();
 		int y = Frame.getHeight();
-		ScrollPane.setPreferredSize(new Dimension(x/2-8,y/2-23));
+		ScrollPane.setPreferredSize(new Dimension(x/2-8,y/2-24));
+		Frame.setSize(x, y+1);
 	}
 	private void importData(File file){
 		try{
@@ -416,12 +431,57 @@ public class App extends JPanel implements ActionListener {
 		while((eachLine=txtReader.readLine()) != null)
 		{
 			model.addRow(eachLine.split("\\s+"));
+			SavedModel.addRow(eachLine.split("\\s+"));
+		}
+		for(int x=0;x < Table.getRowCount();x++)
+		{
+			int Rteam = Integer.valueOf((String)Table.getModel().getValueAt(x, 0));
+			Robot[Rteam] = new Team(Rteam);
+			Robot[Rteam].addToPort(Integer.valueOf((String)Table.getModel().getValueAt(x, 1)));
+			Robot[Rteam].addToCheval(Integer.valueOf((String)Table.getModel().getValueAt(x, 2)));
+			Robot[Rteam].addToRamparts(Integer.valueOf((String)Table.getModel().getValueAt(x, 3)));
+			Robot[Rteam].addToMoat(Integer.valueOf((String)Table.getModel().getValueAt(x, 4)));
+			Robot[Rteam].addToDraw(Integer.valueOf((String)Table.getModel().getValueAt(x, 5)));
+			Robot[Rteam].addToSally(Integer.valueOf((String)Table.getModel().getValueAt(x, 6)));
+			Robot[Rteam].addToRock(Integer.valueOf((String)Table.getModel().getValueAt(x, 7)));
+			Robot[Rteam].addToRough(Integer.valueOf((String)Table.getModel().getValueAt(x, 8)));
+			
 		}
 		txtReader.close();
 		}catch(IOException ex){
-			JOptionPane.showMessageDialog(null, "DIDN'T WORK");
+			try{file.createNewFile();}
+			catch(IOException except){JOptionPane.showMessageDialog(null, "UnExpected Error Encountered when trying to create file");}
+			JOptionPane.showMessageDialog(null, "No File to Import so file has been created");
 			
 		}
+	}
+	private void exportData(){
+
+		try{
+			File file = new File("C:\\Users\\1982\\Desktop\\ScoutingTable"+".txt");
+			if(!file.exists()){
+				file.createNewFile();}
+			
+			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw =new BufferedWriter(fw);
+			for(int x=0;x < Table.getRowCount();x++)
+			{
+				for(int y=0;y<Table.getColumnCount();y++)
+				{
+					bw.write((String)Table.getModel().getValueAt(x,y)+ " ");
+				}
+				bw.write("\n");
+			}
+			bw.close();
+			fw.close();
+			AlreadySaved = true;
+			JOptionPane.showMessageDialog(null, "File Exported");;
+
+			}
+		catch(Exception ex)
+			{ExportButton.setText("WOOOOPS");
+			
+			}
 	}
 }
 
