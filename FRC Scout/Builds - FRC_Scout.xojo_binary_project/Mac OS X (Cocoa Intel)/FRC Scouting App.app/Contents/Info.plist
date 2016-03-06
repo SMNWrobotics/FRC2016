@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist SYSTEM "file://localhost/System/Library/DTDs/PropertyList.dtd">
+<plist version="0.9">
+<dict>
+   <key>CFBundleExecutable</key>
+   <string>FRC Scouting App</string>
+   <key>CFBundleName</key>
+   <string>FRC Scouting App</string>
+   <key>CFBundleIdentifier</key>
+   <string>com.frcteam1982.frcscout</string>
+   <key>CFBundleInfoDictionaryVersion</key>
+   <string>6.0</string>
+   <key>CFBundleVersion</key>
+   <string>1.0.0.3.102</string>
+   <key>CFBundleDevelopmentRegion</key>
+   <string>en</string>
+   <key>CFBundlePackageType</key>
+   <string>APPL</string>
+   <key>CFBundleSignature</key>
+   <string>????</string>
+   <key>NSHumanReadableCopyright</key>
+   <string>v 1.0.0 © 2016 FRC Team 1982</string>
+   <key>CFBundleShortVersionString</key>
+   <string>v 1.0.0</string>
+   <key>CFBundleIconFile</key>
+   <string>App</string>
+   <key>LSMinimumSystemVersion</key>
+   <string>10.7</string>
+   <key>UTImportedTypeDeclarations</key>
+   <array>
+      <dict>
+         <key>UTTypeIdentifier</key>
+         <string>public.database</string>
+         <key>UTTypeConformsTo</key>
+         <array>
+            <string>public.data</string>
+         </array>
+         <key>UTTypeDescription</key>
+         <string>FRC Scout Data</string>
+         <key>UTTypeIconFile</key>
+         <string></string>
+         <key>UTTypeTagSpecification</key>
+         <dict>
+            <key>public.filename-extension</key>
+            <array>
+            <string>sqlite</string>
+            </array>
+            <key>public.mime-type</key>
+            <array>
+            <string>application/x-sqlite3</string>
+            </array>
+         </dict>
+      </dict>
+   </array>
+
+</dict>
+</plist>
