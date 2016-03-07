@@ -2,3 +2,5 @@
 *.gz
 
 FRC Scout/Builds - FRC_Scout.xojo_binary_project/Windows/FRC Scouting App/FRC Scouting App Libs/MBS_Main_Registration_Plugin_18844.dll
+
+*.dylib
