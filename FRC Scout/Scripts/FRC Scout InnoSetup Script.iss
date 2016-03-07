@@ -8,7 +8,7 @@
 AppId={{47F38FA6-C84D-4182-89C1-9E54EAE48481}
 AppName=FRC Scout
 AppVerName=FRC Scout 1.0.0
-VersionInfoVersion=1.0.0.102
+VersionInfoVersion=1.0.0.103
 AppPublisher=FRC Team 1982 Cougar Robotics
 AppPublisherURL=http://nwcougarrobotics.com
 AppSupportURL=http://nwcougarrobotics.com
@@ -34,8 +34,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "Z:\FRC Scout\Builds - FRC_Scout.xojo_binary_project\Windows\FRC Scouting App\FRC Scouting App.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\FRC Scout\Builds - FRC_Scout.xojo_binary_project\Windows\FRC Scouting App\FRC Scouting App Libs\*"; DestDir: "{app}\Strike View Simulator Libs\"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "Z:\FRC Scout\Builds - FRC_Scout.xojo_binary_project\Windows\FRC Scouting App\FRC Scouting App Resources\*"; DestDir: "{app}\Strike View Simulator Resources\"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "Z:\FRC Scout\Builds - FRC_Scout.xojo_binary_project\Windows\FRC Scouting App\FRC Scouting App Libs\*"; DestDir: "{app}\FRC Scouting App Libs\"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "Z:\FRC Scout\Builds - FRC_Scout.xojo_binary_project\Windows\FRC Scouting App\FRC Scouting App Resources\*"; DestDir: "{app}\FRC Scouting App Resources\"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
