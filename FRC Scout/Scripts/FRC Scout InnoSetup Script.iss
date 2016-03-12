@@ -7,8 +7,8 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{47F38FA6-C84D-4182-89C1-9E54EAE48481}
 AppName=FRC Scout
-AppVerName=FRC Scout 1.0.0
-VersionInfoVersion=1.0.0.103
+AppVerName=FRC Scout 1.0.1
+VersionInfoVersion=1.0.1.103
 AppPublisher=FRC Team 1982 Cougar Robotics
 AppPublisherURL=http://nwcougarrobotics.com
 AppSupportURL=http://nwcougarrobotics.com
