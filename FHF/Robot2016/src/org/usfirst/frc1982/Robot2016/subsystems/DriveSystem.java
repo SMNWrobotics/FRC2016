@@ -11,13 +11,11 @@
 
 package org.usfirst.frc1982.Robot2016.subsystems;
 
-import edu.wpi.first.wpilibj.Encoder;
-
-import org.usfirst.frc1982.Robot2016.Robot;
 import org.usfirst.frc1982.Robot2016.RobotMap;
 import org.usfirst.frc1982.Robot2016.commands.*;
-
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
@@ -56,34 +54,6 @@ public class DriveSystem extends Subsystem {
 
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
-    }
-    public void driveNow(Joystick js){
-    	//if the robot is facing forward,
-    	if (!Robot.reversed) {
-    		//may change depending on axis for joystick
-    		//drive forward
-    		robotDrive.arcadeDrive(js.getY(),js.getX());
-    	//if the robot is facing backward,
-    	} else {
-    		robotDrive.arcadeDrive(-js.getY(),-js.getX());
-    	}
-    }
-    
-    public void testAxes(Joystick js) {
-    	System.out.println("X axis: " + js.getX()); //get the X axis and print it to the console
-    	System.out.println("Y axis: " + js.getY()); //same here, but Y
-    	System.out.println("Z axis: " + js.getZ()); //^ but Z
-    	System.out.println("Throttle axis: " + js.getThrottle()); //^ but Throttle
-    	System.out.println("Twist axis: " + js.getTwist()); //^ but Twist
-    }
-    
-    public void driveDistance(double feet){
-    	double error = (feet-leftEncoder.getDistance())/10.0;
-    	if(Math.abs(error) > 1)
-    		error = error/Math.abs(error);
-    	robotDrive.drive(error, 0);
-    	
-    		
     }
 }
 

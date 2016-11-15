@@ -13,7 +13,6 @@ package org.usfirst.frc1982.Robot2016.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc1982.Robot2016.Robot;
-import org.usfirst.frc1982.Robot2016.RobotMap;
 
 /**
  *
@@ -43,8 +42,6 @@ public class DriveEnable extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveSystem.testAxes(Robot.oi.driverJoystick);
-    	Robot.driveSystem.driveNow(Robot.oi.driverJoystick);
     }
 
     // Make this return true when this Command no longer needs to run execute()
