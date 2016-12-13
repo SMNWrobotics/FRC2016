@@ -88,7 +88,7 @@ public class OI {
 
 
         // SmartDashboard Buttons
-        SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
+        SmartDashboard.putData("Autonomous Command", new AutCommDoNothing());
         SmartDashboard.putData("DriveEnable", new DriveEnable());
         SmartDashboard.putData("ToggleRoller", new ToggleRoller());
         SmartDashboard.putData("SetSliderForward", new SetSliderForward());

@@ -59,14 +59,14 @@ public class DriveSystem extends Subsystem {
     }
     public void driveNow(Joystick js){
     	//if the robot is facing forward,
-    	if (!Robot.reversed) {
-    		//may change depending on axis for joystick
-    		//drive forward
-    		robotDrive.arcadeDrive(js.getY(),js.getX());
-    	//if the robot is facing backward,
-    	} else {
+//    	if (!Robot.reversed) {
+//    		//may change depending on axis for joystick
+//    		//drive forward
+//    		robotDrive.arcadeDrive(js.getY(),js.getX());
+//    	//if the robot is facing backward,
+//    	} else {
     		robotDrive.arcadeDrive(-js.getY(),-js.getX());
-    	}
+//    	}
     }
     
     public void testAxes(Joystick js) {
